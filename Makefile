@@ -1,13 +1,29 @@
-build:
-	@brew bundle --no-upgrade
-	@carthage bootstrap --cache-builds --platform osx
-	@mkdir -p Dozer/Other/Generated
-	@swiftgen
-	@xcodegen 
+PROJECT := Dozer.xcodeproj
+DERIVED_DATA := build/DerivedData
+APP := $(DERIVED_DATA)/Build/Products/Release/Dozer.app
+
+project:
+	@command -v xcodegen >/dev/null || (echo "Install XcodeGen first: brew install xcodegen" && exit 1)
+	@xcodegen generate
+
+build: project
+	@xcodebuild \
+		-project "$(PROJECT)" \
+		-scheme Dozer \
+		-configuration Release \
+		-derivedDataPath "$(DERIVED_DATA)" \
+		CODE_SIGNING_ALLOWED=NO \
+		build
+	@codesign --force --sign - "$(APP)"
+	@echo "Built native Apple Silicon app: $(APP)"
+
+open: project
 	@xed "."
 
-release:
-	@echo "Running Fastlane deploy"
-	@bundle exec fastlane release
+package: build
+	@bash Scripts/PackageRelease.sh local "$(APP)"
 
-.PHONY: build release 
+release:
+	@bash Scripts/PackageRelease.sh signed "$(APP)"
+
+.PHONY: project build open package release

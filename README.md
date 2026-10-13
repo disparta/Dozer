@@ -1,39 +1,60 @@
 <p align="center">
-	<img width="200" height="200" margin-right="100%" src="https://raw.githubusercontent.com/Mortennn/Dozer/master/Stuff/AppIcon.png">
+	<img width="200" height="200" src="Stuff/AppIcon.png" alt="Dozer icon">
 </p>
 <p align="center">Hide menu bar icons to give your Mac a cleaner look.</p>
 <p align="center">
-	<a href="https://github.com/Mortennn/Dozer/releases/latest">
- 		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
+	<a href="https://github.com/disparta/Dozer/releases">
+		<img src="https://img.shields.io/badge/releases-download-brightgreen.svg" alt="releases">
+	</a>
 	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
  		<img src="https://img.shields.io/badge/platform-macOS-lightgrey.svg" alt="platform">
 	</a>
-	<a href="https://img.shields.io/badge/requirements-macOS High Sierra+-ff69b4.svg">
- 		<img src="https://img.shields.io/badge/requirements-macOS High Sierra+-lightgrey.svg" alt="systemrequirements">
-	</a>
-	<a href="https://github.com/sindresorhus/swiftlint-sindre">
- 		<img src="https://img.shields.io/badge/SwiftLint-Sindre-hotpink.svg" alt="swiftlint">
+	<a href="https://github.com/disparta/Dozer">
+		<img src="https://img.shields.io/badge/requirements-macOS%2013%2B%20%C2%B7%20Apple%20Silicon-lightgrey.svg" alt="macOS 13 or later, Apple Silicon">
 	</a>
 	<a href="https://opensource.org/licenses/MPL-2.0">
  		<img src="https://img.shields.io/badge/License-MPL%202.0-orange.svg" alt="license">
 	</a>
 </p>
 <p align="center">
-	<img height="100" min-width="100" src="https://github.com/Mortennn/Dozer/raw/master/Stuff/demo.gif" alt="demo">
+	<img height="100" src="Stuff/demo.gif" alt="demo">
 </p>
 
-<p align="center"></p>
-<a href="https://www.buymeacoffee.com/mortennn" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+This is an independent community fork of [Mortennn/Dozer](https://github.com/Mortennn/Dozer),
+maintained by [Musa Rikhotso](https://github.com/disparta). It is free to download,
+use, and modify under the MPL 2.0 license.
 
-## ⚙️ Install
-Using [Homebrew Cask](https://formulae.brew.sh/cask/dozer):
+## Download and install
+
+The first signed and notarized release is being prepared. Downloads will appear
+on this fork's [Releases page](https://github.com/disparta/Dozer/releases).
+
+When available, download `Dozer-<version>-macos-arm64.zip`, unzip it, and drag
+`Dozer.app` into Applications. Quit any older version of Dozer before opening
+this fork. You need macOS 13 or later and an Apple Silicon Mac (M1 or later).
+Xcode and Homebrew are only needed to build from source.
+
+Updates are installed manually from the Releases page. This fork has its own
+app identifier, so settings from the original app are not automatically migrated.
+
+## Build a native Apple Silicon app
+
+This maintained fork builds Dozer directly for Apple Silicon and no longer
+depends on the abandoned Carthage frameworks used by the original release.
+It requires macOS 13 or newer, Apple Silicon, and Xcode 26 or newer.
+
 ```shell
-brew install --cask dozer
+brew install xcodegen
+make build
+open build/DerivedData/Build/Products/Release/Dozer.app
 ```
 
-Manual:
+The resulting executable is an arm64 binary and does not use Rosetta. To work
+in Xcode instead, run `make open`.
 
-[Download](https://github.com/Mortennn/Dozer/releases/latest), open and drag the app to the Applications folder.
+`make package` creates a local development ZIP with an ad hoc signature. Public
+downloads use `make release` with Developer ID signing and Apple notarization;
+see [RELEASING.md](RELEASING.md).
 
 ## ⚫️ Dozer Icons
 
@@ -59,4 +80,11 @@ There are 2 or 3, numbered from right to left:
 <!-- **Checkout [this GIF](https://raw.githubusercontent.com/Mortennn/Dozer/master/Stuff/demo.gif) to watch Dozer in action.** -->
 
 ## 📄 Requirements
-macOS 10.13+
+
+macOS 13 or newer and Apple Silicon. Intel Macs are not supported by this build.
+
+## License and origin
+
+Dozer was originally created by Mortennn and is distributed under the Mozilla
+Public License 2.0. This fork preserves the original notices and license while
+modernizing the app for current macOS releases.

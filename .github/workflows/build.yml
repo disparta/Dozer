@@ -1,0 +1,26 @@
+name: Build
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Build and package locally
+        run: make package
+      - name: Verify Apple Silicon binary and bundled license
+        run: |
+          app=build/DerivedData/Build/Products/Release/Dozer.app
+          test "$(lipo -archs "$app/Contents/MacOS/Dozer")" = arm64
+          codesign --verify --deep --strict "$app"
+          test -f "$app/Contents/Resources/LICENSE"
+          test -f "$app/Contents/Resources/SOURCE.txt"

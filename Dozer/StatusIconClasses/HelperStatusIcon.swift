@@ -3,11 +3,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 import Cocoa
-import Defaults
 
 private struct StatusIconLength {
     static var show: CGFloat {
-        Defaults[.buttonPadding]
+        Settings.buttonPadding
     }
     static let hide: CGFloat = 10_000
 }
@@ -20,12 +19,12 @@ class HelperstatusIcon {
     init() {
         type = .normal
         statusIcon.length = StatusIconLength.show
-        statusIcon.highlightMode = false
 
         guard let statusIconButton = statusIcon.button else {
             fatalError("helper status item button failed")
         }
 
+        (statusIconButton.cell as? NSButtonCell)?.highlightsBy = []
         statusIconButton.target = self
         statusIconButton.action = #selector(statusIconClicked(_:))
         setIcon()

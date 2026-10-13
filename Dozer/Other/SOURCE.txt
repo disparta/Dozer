@@ -1,0 +1,7 @@
+Dozer is free, open source software under the Mozilla Public License 2.0.
+Originally created by Mortennn and maintained in this independent fork.
+
+Source code: https://github.com/disparta/Dozer
+Release source: https://github.com/disparta/Dozer/releases
+Download the source archive for the tag matching this app's version.
+The full license is included as LICENSE in this app's Contents/Resources.
